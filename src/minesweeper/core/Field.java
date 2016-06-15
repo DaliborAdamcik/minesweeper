@@ -114,7 +114,6 @@ public class Field {
                         if ( ti instanceof Clue &&  ((Clue)ti).getValue()<=0 && ((Clue)ti).getState()==State.CLOSED) {
                             tiles[actRow][actColumn].setState(State.OPEN);
                             openAdjacentTiles(actRow, actColumn);
-                            //return;
                         }
                     }
                 }
