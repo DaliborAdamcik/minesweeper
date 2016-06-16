@@ -120,6 +120,7 @@ public class Field {
             }
         }
     }
+    
     /**
      * Generates playing field.
      */
@@ -145,8 +146,6 @@ public class Field {
         	{
             	if(this.tiles[row][col]==null)
     			{
-            		
-            		
             		this.tiles[row][col]= new Clue(countAdjacentMines(row, col));
     			}
         		
@@ -160,20 +159,20 @@ public class Field {
      * @return true if game is solved, false otherwise
      */
     private boolean isSolved() {
-        int fndcnt = 0;
-    	for(int row=0;row<this.rowCount;row++)
-        	for(int col=0;col<this.columnCount;col++)
-        	{
-        		Tile ti =this.getTile(row, col);
-        		if((ti instanceof Mine) && ti.getState()==State.MARKED)
-        			fndcnt++;
-        	}
-        return fndcnt==this.mineCount; 
+        return	(this.getColumnCount()*this.getRowCount() - this.getNumberOf(State.OPEN) == this.getMineCount()); 
     }
     
     private int getNumberOf(Tile.State state)
     {
-    	return 0;
+    	int cnt=0;
+    	for(int row = 0;row<this.getRowCount();row++)
+    		for(int col = 0; col<this.getColumnCount();col++)
+    		{
+    			if(this.getTile(row, col).getState() == state)
+    				cnt++;
+    		}
+    			
+    	return cnt;
     }
 
     /**
@@ -201,6 +200,11 @@ public class Field {
 
         return count;
     }
+    
+    public int getRemainingMineCount()
+    {
+    	return this.getMineCount() - this.getNumberOf(State.MARKED);
+    }
 
 	public int getRowCount() {
 		return rowCount;
@@ -226,8 +230,8 @@ public class Field {
 	{
     	if(row<0 || row>=getRowCount() || col<0 || col>=getColumnCount())
     		return null;
-    	// Tile[rowCount][columnCount];
 
+    	// Tile[rowCount][columnCount];
 		return this.tiles[row][col];
 	}
 }
