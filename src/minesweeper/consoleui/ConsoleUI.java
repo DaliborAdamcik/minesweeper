@@ -141,6 +141,57 @@ public class ConsoleUI implements UserInterface {
      * Reads line from console and does the action on a playing field according to input string.
      */
     private void processInput() {
+    	boolean badInput = true;
+    	do{
+	    	try
+	    	{
+	        	if((this.badcmd++%3==0)||this.badcmd==0) // shows help o start or when user types bad command more times
+	        		System.out.println("help: x,e:exit / m0a: mark tile A0 / o1b: open tile B1");
+
+	        	System.out.print(">"); // indicate user input
+	    		handleInput(readLine().toLowerCase());
+	    		badInput=false;
+	    	}
+	    	catch(WrongFormatException ex)
+	    	{
+	    	  System.err.println(ex.getMessage());	
+	    	}
+    	}
+    	while(badInput);
+    }
+    
+    private void handleInput(String input) throws WrongFormatException
+    {
+        Pattern pattern = Pattern.compile("[ex]|[om]([0-"+Integer.toString(field.getColumnCount()-1)+"])([a-"+
+        		((char)('a'+field.getRowCount()-1))+"])");
+
+        Matcher matcher;
+        
+       	matcher = pattern.matcher(input);
+        
+       	if(!matcher.matches())
+       		throw new WrongFormatException("Bad input string (i dont know what to type here)");
+        
+        int irow=0;
+        int icol=0;
+        if("mo".indexOf(matcher.group(0).charAt(0))>=0) // better is assign its to local var as type it more times to attribute
+        {
+	        irow = (int)(matcher.group(2).charAt(0)-'a'); // do conversion
+	        icol = Integer.parseInt(matcher.group(1)); // we dont need to check try/catch, number format is checked by regular word
+        }
+        
+        switch(matcher.group(0).charAt(0)) // run actions
+        {
+        	case 'x':
+        	case 'e': System.out.println("Bye...");System.exit(0); break;
+	    	case 'm': field.markTile(irow, icol);break;
+	    	case 'o': field.openTile(irow, icol);break;
+	    	
+        }
+    }
+    
+    /*    private void handleInput(String input) throws WrongFormatException
+    {
         Pattern pattern = Pattern.compile("[ex]|[om]([0-"+Integer.toString(field.getColumnCount()-1)+"])([a-"+
         		((char)('a'+field.getRowCount()-1))+"])");
 
@@ -174,4 +225,5 @@ public class ConsoleUI implements UserInterface {
 	    	
         }
     }
+*/
 }

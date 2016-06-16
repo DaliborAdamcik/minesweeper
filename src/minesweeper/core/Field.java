@@ -110,8 +110,9 @@ public class Field {
                 for (int columnOffset = -1; columnOffset <= 1; columnOffset++) {
                     int actColumn = column + columnOffset;
                     if (actColumn >= 0 && actColumn < columnCount) {
-                    	Tile ti =tiles[actRow][actColumn]; 
-                        if ( ti instanceof Clue &&  ((Clue)ti).getValue()<=0 && ((Clue)ti).getState()==State.CLOSED) {
+                    	Tile ti = tiles[actRow][actColumn]; 
+                    	Tile tileOrig = tiles[row][column];
+                        if (ti instanceof Clue &&  ((Clue)tileOrig).getValue()==0 && ((Clue)ti).getState()==State.CLOSED) {
                             tiles[actRow][actColumn].setState(State.OPEN);
                             openAdjacentTiles(actRow, actColumn);
                         }

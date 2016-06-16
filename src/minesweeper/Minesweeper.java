@@ -16,7 +16,7 @@ public class Minesweeper {
     private Minesweeper() {
         userInterface = new ConsoleUI();
         
-        Field field = new Field(5, 5, 2);
+        Field field = new Field(8, 8, 10);
         userInterface.newGameStarted(field);
     }
 
