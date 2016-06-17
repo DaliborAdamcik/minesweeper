@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import minesweeper.Minesweeper;
 import minesweeper.UserInterface;
 import minesweeper.core.Field;
 import minesweeper.core.GameState;
@@ -80,7 +81,8 @@ public class ConsoleUI implements UserInterface {
        				s2.append("---");
        			}	
        			s1.append(" | Unmarked mines: "+field.getRemainingMineCount());
-       			s2.append("--");
+       			s2.append("-| Your time: ").append(printCurrentTime(Minesweeper.getInstance().getPlayingSeconds()));
+       			
        			System.out.println(s1);
        			System.out.println(s2);
     		}
@@ -121,8 +123,20 @@ public class ConsoleUI implements UserInterface {
         	}
         	System.out.println();
         }
-        
-        
+    }
+    
+    private String printCurrentTime(int cursec)
+    {
+    	if(cursec / 3600>0)
+    		return String.format("%dhr ", cursec / 3600)+printCurrentTime(cursec%3600);
+    	else
+    	if(cursec / 60>0)
+    		return String.format("%dmin ", cursec / 60)+printCurrentTime(cursec%60);
+    	else
+    	if(cursec>0)
+    		return String.format("%dsec ", cursec);
+    	else
+    		return ""; 
     }
     
     private void updatePrintTile(minesweeper.core.Tile tile)
@@ -141,23 +155,20 @@ public class ConsoleUI implements UserInterface {
      * Reads line from console and does the action on a playing field according to input string.
      */
     private void processInput() {
-    	boolean badInput = true;
-    	do{
-	    	try
-	    	{
-	        	if((this.badcmd++%3==0)||this.badcmd==0) // shows help o start or when user types bad command more times
-	        		System.out.println("help: x,e:exit / m0a: mark tile A0 / o1b: open tile B1");
+    	try
+    	{
+        	if((this.badcmd++%4==0)||this.badcmd==0) // shows help o start or when user types bad command more times
+        		System.out.println("help: x,e:exit / m0a: mark tile A0 / o1b: open tile B1");
 
-	        	System.out.print(">"); // indicate user input
-	    		handleInput(readLine().toLowerCase());
-	    		badInput=false;
-	    	}
-	    	catch(WrongFormatException ex)
-	    	{
-	    	  System.err.println(ex.getMessage());	
-	    	}
+        	System.out.print(">"); // indicate user input
+    		handleInput(readLine().toLowerCase());
+    		badcmd=1;
     	}
-    	while(badInput);
+    	catch(WrongFormatException ex)
+    	{
+    	  System.err.println(ex.getMessage());
+    	  processInput();
+    	}
     }
     
     private void handleInput(String input) throws WrongFormatException

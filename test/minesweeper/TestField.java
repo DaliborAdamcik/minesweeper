@@ -38,6 +38,25 @@ public class TestField extends TestCase {
 	 */
 	protected void setUp() throws Exception {
 		super.setUp();
+		
+		if(field!=null)
+			return;
+		
+		java.util.Random ra = new java.util.Random();
+		
+		do{
+			crow= ra.nextInt(50);
+		} while(crow<2);
+		do{
+			ccol= ra.nextInt(50);
+		} while(ccol<2);
+		do{
+			cmines= ra.nextInt(crow*ccol);
+		} while(cmines<2);
+		
+		
+		field = new minesweeper.core.Field(crow, ccol, cmines);
+		assertNull("Initialization of object failed.", field);
 	}
 
 	/* (non-Javadoc)
@@ -51,23 +70,8 @@ public class TestField extends TestCase {
 	 * Test method for {@link minesweeper.core.Field#Field(int, int, int)}.
 	 */
 
-	@Before
+	@Test
 	public final void testField() {
-		java.util.Random ra = new java.util.Random();
-		
-		do{
-			crow= ra.nextInt(50);
-		} while(crow<2);
-		do{
-			ccol= ra.nextInt(50);
-		} while(ccol<2);
-		do{
-			cmines= ra.nextInt(crow*ccol);
-		} while(cmines<2);
-		
-		assertNull(field);
-		
-		field = new minesweeper.core.Field(crow, ccol, cmines);
 		
 		assertNotNull(field);
 
