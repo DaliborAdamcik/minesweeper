@@ -14,6 +14,8 @@ import java.io.Serializable;
  *
  */
 public class Settings implements Serializable {
+	static final long serialVersionUID = 1;
+	
 	private final int rowCount;
 	private final int columnCount;
 	private final int mineCount; 
@@ -40,6 +42,8 @@ public class Settings implements Serializable {
 	
 	public void save()
 	{
+		// TODO sem eöte pridaù File
+		
 		try
 		{
 			FileOutputStream strm = new FileOutputStream(SETTING_FILE);
@@ -51,6 +55,7 @@ public class Settings implements Serializable {
 			finally
 			{
 				strm.close();
+				os.close();
 			}
 		}
 		catch(Exception e)
@@ -73,6 +78,7 @@ public class Settings implements Serializable {
 			finally
 			{
 				strm.close();
+				os.close();
 			}
 		}
 		catch(Exception e)

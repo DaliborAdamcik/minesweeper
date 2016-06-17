@@ -73,9 +73,9 @@ public class SettingsTest {
 		}
 
 		assertNotNull("No setting loaded by Class", loaded);
-		assertEquals("No rowcount match",loaded.getRowCount(), rowc);
-		assertEquals("No colcount match",loaded.getColumnCount(), colc);
-		assertEquals("No minecount match",loaded.getMineCount(), minc);
+		assertEquals("No rowcount match", rowc, loaded.getRowCount());
+		assertEquals("No colcount match", colc, loaded.getColumnCount());
+		assertEquals("No minecount match", minc, loaded.getMineCount());
 	}
 
 
@@ -93,7 +93,7 @@ public class SettingsTest {
 	 */
 	@Test
 	public final void testGetRowCount() {
-		assertEquals("No rowcount match", sets.getRowCount(), rowc);
+		assertEquals("No rowcount match", rowc, sets.getRowCount());
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class SettingsTest {
 	 */
 	@Test
 	public final void testGetColumnCount() {
-		assertEquals("No colcount match",sets.getColumnCount(), colc);
+		assertEquals("No colcount match", colc, sets.getColumnCount());
 	}
 
 	/**
@@ -109,16 +109,38 @@ public class SettingsTest {
 	 */
 	@Test
 	public final void testGetMineCount() {
-		assertEquals("No minecount match",sets.getMineCount(), minc);
+		assertEquals("No minecount match", minc, sets.getMineCount());
 	}
 
 	/**
 	 * Test method for predefined setting BEGINNER
 	 */
 	@Test
-	public final void testGetMineCount() {
-		Settings beg = Settings.BEGINNER;
-		
-		
+	public final void testBEGINNER() {
+		Settings loaded = Settings.BEGINNER;
+		assertNotNull("No setting loaded by Class", loaded);
+		assertEquals("No rowcount match", 9, loaded.getRowCount());
+		assertEquals("No colcount match", 9, loaded.getColumnCount());
+		assertEquals("No minecount match", 10, loaded.getMineCount());
 	}
+	
+	@Test
+	public final void testINTERMEDIATE() {
+		Settings loaded = Settings.INTERMEDIATE;
+		assertNotNull("No setting loaded by Class", loaded);
+		assertEquals("No rowcount match", 16, loaded.getRowCount());
+		assertEquals("No colcount match", 16, loaded.getColumnCount());
+		assertEquals("No minecount match", 40, loaded.getMineCount());
+	}
+	
+	@Test
+	public final void testEXPERT() {
+		Settings loaded = Settings.EXPERT;
+		assertNotNull("No setting loaded by Class", loaded);
+		assertEquals("No rowcount match", 16, loaded.getRowCount());
+		assertEquals("No colcount match", 30, loaded.getColumnCount());
+		assertEquals("No minecount match", 99, loaded.getMineCount());
+	}
+
+	
 }
