@@ -3,13 +3,8 @@
  */
 package minesweeper;
 
-import static org.junit.Assert.fail;
-
 import org.junit.After;
 import org.junit.Before;
-
-//import java.util.Random;
-//import static org.junit.Assert.*;
 
 import org.junit.Test;
 import minesweeper.core.*;
@@ -17,7 +12,7 @@ import minesweeper.core.Tile.State;
 import junit.framework.TestCase;
 
 /**
- * @author Študent
+ * @author Dalibor Adamèík
  *
  */
 public class TestField extends TestCase {
@@ -36,6 +31,7 @@ public class TestField extends TestCase {
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#setUp()
 	 */
+	@Before
 	protected void setUp() throws Exception {
 		super.setUp();
 		
@@ -56,15 +52,16 @@ public class TestField extends TestCase {
 		
 		
 		field = new minesweeper.core.Field(crow, ccol, cmines);
-		assertNull("Initialization of object failed.", field);
+		assertNotNull("Initialization of object failed.", field);
 	}
 
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#tearDown()
 	 */
+	/*@After
 	protected void tearDown() throws Exception {
 		super.tearDown();
-	}
+	}*/
 
 	/**
 	 * Test method for {@link minesweeper.core.Field#Field(int, int, int)}.
@@ -72,14 +69,9 @@ public class TestField extends TestCase {
 
 	@Test
 	public final void testField() {
-		
-		assertNotNull(field);
-
 		for(int r = 0; r < field.getRowCount(); r++) 
             for(int c = 0; c < field.getColumnCount(); c++) 
                 	assertEquals("Initial state of tile is invalid. ["+r+","+c+"]("+crow+","+ccol+") is "+field.getTile(r, c).getClass().getSimpleName(), State.CLOSED, field.getTile(r, c).getState());
-		
-		
 	}
 
 	/**

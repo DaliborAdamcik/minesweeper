@@ -45,23 +45,7 @@ public class SettingsTest {
 	 */
 	@Test
 	public final void testHashCode() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link minesweeper.Settings#Settings()}.
-	 */
-	@Test
-	public final void testSettings() {
-		assertNotNull("Object <Settings> create", sets);
-	}
-
-	/**
-	 * Test method for {@link minesweeper.Settings#Settings(int, int, int)}.
-	 */
-	@Test
-	public final void testSettingsIntIntInt() {
-		fail("Not yet implemented"); // TODO
+		assertEquals("Invalid hashcode", sets.hashCode(), rowc*colc*minc);
 	}
 
 	/**
@@ -69,7 +53,29 @@ public class SettingsTest {
 	 */
 	@Test
 	public final void testSaveLoad() {
-		assertNotNull("Object <Settings> create", sets);
+		try
+		{
+			sets.save();
+		}
+		catch(Exception e)
+		{
+			assertFalse("Save: "+e.getMessage(), true);
+		}
+		
+		Settings loaded = null;
+		try
+		{
+			loaded = Settings.load();
+		}
+		catch(Exception e)
+		{
+			assertFalse("Load: "+e.getMessage(), true);
+		}
+
+		assertNotNull("No setting loaded by Class", loaded);
+		assertEquals("No rowcount match",loaded.getRowCount(), rowc);
+		assertEquals("No colcount match",loaded.getColumnCount(), colc);
+		assertEquals("No minecount match",loaded.getMineCount(), minc);
 	}
 
 
@@ -78,7 +84,8 @@ public class SettingsTest {
 	 */
 	@Test
 	public final void testEqualsObject() {
-		fail("Not yet implemented"); // TODO
+		Settings se2t = new Settings(rowc, colc, minc);
+		assertTrue("Object not equals", sets.equals(se2t));
 	}
 
 	/**
@@ -86,7 +93,7 @@ public class SettingsTest {
 	 */
 	@Test
 	public final void testGetRowCount() {
-		fail("Not yet implemented"); // TODO
+		assertEquals("No rowcount match", sets.getRowCount(), rowc);
 	}
 
 	/**
@@ -94,7 +101,7 @@ public class SettingsTest {
 	 */
 	@Test
 	public final void testGetColumnCount() {
-		fail("Not yet implemented"); // TODO
+		assertEquals("No colcount match",sets.getColumnCount(), colc);
 	}
 
 	/**
@@ -102,7 +109,16 @@ public class SettingsTest {
 	 */
 	@Test
 	public final void testGetMineCount() {
-		fail("Not yet implemented"); // TODO
+		assertEquals("No minecount match",sets.getMineCount(), minc);
 	}
 
+	/**
+	 * Test method for predefined setting BEGINNER
+	 */
+	@Test
+	public final void testGetMineCount() {
+		Settings beg = Settings.BEGINNER;
+		
+		
+	}
 }
